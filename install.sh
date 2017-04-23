@@ -4,6 +4,14 @@ set -e
 service slapd start
 
 cat <<EOF | ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=config
+changetype: modify
+add: olcServerID
+olcServerID: 2
+EOF
+
+
+cat <<EOF | ldapmodify -Y EXTERNAL -H ldapi:///
 dn: cn=module{0},cn=config
 changetype: modify
 add: olcModuleLoad
@@ -45,11 +53,11 @@ cat <<EOF | ldapmodify -Y EXTERNAL -H ldapi:///
 dn: olcDatabase={0}config,cn=config
 changetype: modify
 add: olcSyncRepl
-olcSyncRepl: rid=001 provider=ldap://$LDAP1_NAME/ binddn="cn=config" 
+olcSyncRepl: rid=001 provider=ldaps://$LDAP1_NAME/ binddn="cn=config" 
   bindmethod=simple credentials=$LDAP_PASSWORD 
   searchbase="cn=config" type=refreshAndPersist
   retry="5 5 300 5" timeout=1
-olcSyncRepl: rid=002 provider=ldap://$LDAP2_NAME/ binddn="cn=config" 
+olcSyncRepl: rid=002 provider=ldaps://$LDAP2_NAME/ binddn="cn=config" 
   bindmethod=simple credentials=$LDAP_PASSWORD 
   searchbase="cn=config" type=refreshAndPersist
   retry="5 5 300 5" timeout=1
