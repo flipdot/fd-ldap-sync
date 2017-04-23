@@ -1,0 +1,7 @@
+Hosts:
+
+1. host (raspbery pi):
+ldaps://space.flipdot.org:636
+
+2. host (datacenter):
+ldaps://ldap.flipdot.org:636 (ssl-termination at load-balancer)

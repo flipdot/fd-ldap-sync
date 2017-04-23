@@ -1,0 +1,6 @@
+version: "2"
+services:
+    app:
+        image: flipdot/ldap-sync
+        build: .
+        env_file: app.env
